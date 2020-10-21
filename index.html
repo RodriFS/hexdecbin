@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Converter</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="index.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Base Converter</h1>
+    <div class="converter-group">
+      <div class="converter-sub-group">
+        <h2>Hex</h2>
+        <input id="hex" oninput="fromHex()"/>
+      </div >
+      <div class="converter-sub-group">
+        <h2>Binary</h2>
+        <input id="bin" oninput="fromBin()"/>
+      </div>
+      <div class="converter-sub-group">
+        <h2>Decimal</h2>
+        <input id="dec" oninput="fromDec()"/>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h1>Two's Complement</h1>
+    <div class="converter-group">
+      <div class="converter-sub-group">
+        <h2 id="negative">(0)</h2>
+        <div class="complement-container">
+          <div class="complement-inputs-container">
+            <input id="two"/>
+            <div class="bits-container">
+              Bits:
+              <input id="bits" value="8"/>
+            </div>
+          </div>
+          <button onclick="fromDec()">Refresh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
