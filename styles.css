@@ -48,6 +48,7 @@ h2 {
 
 .complement-container {
   display: flex;
+  flex-wrap: wrap;
 }
 
 #bits {
@@ -65,7 +66,7 @@ h2 {
 
 button {
   width: 100px;
-  margin-left: 10px;
+  padding: 10px 0 10px 0;
   background-color: #f8c0c8;
   border: 2px solid #6b2d5c;
   border-radius: 10px;
