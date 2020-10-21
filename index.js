@@ -17,7 +17,6 @@ const convert = {
   },
   twos: {
     getElement: () => document.getElementById("two"),
-    base: 2,
   },
   bits: {
     getElement: () => document.getElementById("bits"),
@@ -26,42 +25,44 @@ const convert = {
 
 function from(regex, fromId, intoIds) {
   let fromTag = convert[fromId].getElement();
+  let twosTag = convert["twos"].getElement();
   let bits = convert["bits"].getElement().value;
   fromTag.value = fromTag.value
     .split("")
     .filter((char) => regex.test(char))
     .join("");
   if (regex.test(fromTag.value)) {
-    for (toId of intoIds) {
+    intoIds.forEach((toId) => {
       let toTag = convert[toId].getElement();
-      let value = fromTag.value;
-      if (toId === "twos") {
-        value = (2 << (bits - 1)) - fromTag.value;
-        if (value <= 0) {
-          toTag.value = "Not enough bits";
-          continue;
-        }
-      }
-      toTag.value = base_convert(value, convert[fromId].base, convert[toId].base).toUpperCase();
+      toTag.value = base_convert(fromTag.value, convert[fromId].base, convert[toId].base).toUpperCase();
+    });
+
+    let decTag = convert["dec"].getElement();
+    let value = (2 << (bits - 1)) - decTag.value;
+    if (value <= 0) {
+      twosTag.value = "Not enough bits";
+    } else {
+      twosTag.value = base_convert(value, convert["dec"].base, 2);
     }
   } else {
     intoIds.forEach((toId) => {
       let toTag = convert[toId].getElement();
       toTag.value = "";
     });
+    twosTag.value = "";
   }
   let negative = document.getElementById("negative");
   negative.innerText = `(${-convert["dec"].getElement().value})`;
 }
 
 function fromHex() {
-  from(new RegExp(/^[a-fA-F0-9]+$/), "hex", ["bin", "dec", "twos"]);
+  from(new RegExp(/^[a-fA-F0-9]+$/), "hex", ["bin", "dec"]);
 }
 
 function fromBin() {
-  from(new RegExp(/^[0-1]+$/), "bin", ["hex", "dec", "twos"]);
+  from(new RegExp(/^[0-1]+$/), "bin", ["hex", "dec"]);
 }
 
 function fromDec() {
-  from(new RegExp(/^[0-9]+$/), "dec", ["hex", "bin", "twos"]);
+  from(new RegExp(/^[0-9]+$/), "dec", ["hex", "bin"]);
 }
